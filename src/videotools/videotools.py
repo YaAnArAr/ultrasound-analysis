@@ -11,3 +11,7 @@ def read_video(path: Path | str) -> Generator[NDArray, None, None]:
     :returns: generator, yielding RGB video frames
     '''
     pass
+
+
+def x(x: int):
+    return list(x)
