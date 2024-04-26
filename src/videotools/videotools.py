@@ -14,5 +14,4 @@ def read_video(path: Path | str) -> Generator[NDArray, None, None]:
     :param path: path to the video
     :returns: generator, yielding RGB video frames
     '''
-    
     raise NotImplementedError
