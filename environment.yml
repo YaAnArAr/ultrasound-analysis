@@ -6,3 +6,4 @@ dependencies:
   - numpy=1.26.4
   - ruff=0.4.2
   - conda-forge::opencv=4.9.0
+  - click=8.1.7
