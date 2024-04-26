@@ -15,5 +15,5 @@ def read_video(path: Path | str) -> Generator[NDArray, None, None]:
 
 def bad_func(value: int):
     res = list(value)
-    return str(res)
+    return res
 
