@@ -1,3 +1,7 @@
+'''
+This module contains classes and functions for frame processing
+'''
+
 from enum import Enum
 
 from numpy.typing import NDArray

@@ -1,3 +1,7 @@
+'''
+This module contains classes and functions for video operations
+'''
+
 from collections.abc import Generator
 from pathlib import Path
 
@@ -10,4 +14,5 @@ def read_video(path: Path | str) -> Generator[NDArray, None, None]:
     :param path: path to the video
     :returns: generator, yielding RGB video frames
     '''
-    pass
+    
+    raise NotImplementedError
