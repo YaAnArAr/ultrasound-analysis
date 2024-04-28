@@ -3,6 +3,7 @@ name = 'src'
 version = '0.1.1'
 authors = [
     {name = 'Artsiom Halian'},
+    {name = 'Artsiom Saladukha'}
 ]
 description = 'uzi task'
 requires-python = '>=3.12.0'
