@@ -4,10 +4,13 @@
 
 1. Необходимо установить Mamba. [Ссылка на гайд](https://mamba.readthedocs.io/en/latest/installation/mamba-installation.html)
 
-2. Необходимо для начала создать окружение:
+2. Если не хотите работать через *miniforge prompt*, то выполните там следующую команду:
+
+        mamba init powershell
+4. Необходимо для начала создать окружение:
 
         mamba create -f environment.yml
-3. После обновления зависимостей в проекте нужно их подтягивать:
+5. После обновления зависимостей в проекте нужно их подтягивать:
 
         mamba env update -f environment.yml
 
