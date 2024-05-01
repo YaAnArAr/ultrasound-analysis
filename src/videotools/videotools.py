@@ -23,7 +23,7 @@ def crop_frame(frame: NDArray, crop_offset: tuple[tuple[int, int]] = CROP_OFFSET
     x_first_offset, x_second_offset = x_offset
     y_first_offset, y_second_offset = y_offset
     x, y = frame.shape[0], frame.shape[1]
-    cropped_frame = frame[x_first_offset:x - x_second_offset, 
+    cropped_frame = frame[x_first_offset:x - x_second_offset,
                           y_first_offset:y - y_second_offset]
     return cropped_frame
 
