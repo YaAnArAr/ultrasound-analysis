@@ -32,12 +32,12 @@ class Cloud:
     def min(self, axis: int | None = None) -> Pixel:
         """
         Returns minimal pixel, if axis is specified, minimal pixel for x or y is returned
-        Note: if axis is not None, returned pixel is minimal by specified axis, but it is not minimal in total
+        Note: if axis is not None, returned pixel is minimal by specified axis, 
+        but it is not minimal in total
         :returns: minimal pixel, if axis is specified, minimal pixel for x or y is returned
         """
         if axis is None:
             return min(self.points)
-        
         assert 0 <= axis <= 1
         return min(self.points, key=itemgetter(axis)) 
         
