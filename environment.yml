@@ -7,3 +7,4 @@ dependencies:
   - ruff=0.4.2
   - conda-forge::opencv=4.9.0
   - click=8.1.7
+  - noteboook==7.1.3
