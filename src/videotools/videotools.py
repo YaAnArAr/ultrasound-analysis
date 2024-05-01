@@ -2,8 +2,9 @@
 This module contains classes and functions for video operations
 """
 
-from collections.abc import Generator
 from pathlib import Path
+
+import cv2
 
 from numpy.typing import NDArray
 
@@ -32,5 +33,4 @@ def read_video(path: Path | str) -> NDArray:
     while cap.isOpened():
         ret, frame = cap.read()
         if ret:
-            frame = crop_frame(frame)
-            yield frame.astype('uint8')
+            yield crop_frame(frame).astype('uint8')
