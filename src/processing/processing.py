@@ -39,8 +39,8 @@ class Cloud:
         if axis is None:
             return min(self.points)
         assert 0 <= axis <= 1
-        return min(self.points, key=itemgetter(axis)) 
-        
+        return min(self.points, key=itemgetter(axis))
+
     def square(self) -> int:
         """
         Returns square of the cloud
