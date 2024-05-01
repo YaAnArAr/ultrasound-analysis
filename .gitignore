@@ -2,6 +2,9 @@
 .vscode/
 .idea/
 
+# own notebooks
+my-notebooks/
+
 ### Python ###
 # Byte-compiled / optimized / DLL files
 __pycache__/
