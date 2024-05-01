@@ -6,10 +6,16 @@ from enum import Enum
 from dataclasses import dataclass, field
 from operator import itemgetter
 
+import numpy as np
+
 from numpy.typing import NDArray
+
+from ..videotools import to_float_image 
 
 
 Pixel = tuple[int, int]
+
+SENSIVITY = 5
 
 
 class PixelColor(Enum):
@@ -48,14 +54,24 @@ class Cloud:
         return len(self.points)
 
 
-def get_frame_colors(frame: NDArray) -> NDArray:
+def get_frame_colors(frame: NDArray, sensivity: float | int = SENSIVITY) -> NDArray:
     """
-    Returns HxW matrix containing color of each pixel, color is determined by PixelColor enum
-    :param frame: HxWx3 image - a frame
+    Returns HxW matrix containing color of each pixel, color 
+    is determined by PixelColor enum
+    :param frame: HxWx3 RGB image - a frame
+    :param sensivity: maximal difference between values when 
+    pixel is considered grayscale
     :returns: HxW array containing pixel colors
     """
+    if isinstance(sensivity, int):
+        sensivity /= 256
     assert len(frame.shape) == 3 and frame.shape[-1] == 3, 'frame should be a 3 channel image'
-    raise NotImplementedError
+    frame = to_float_image(frame)
+    medians = np.median(frame, axis=-1)
+    result = np.zeros((frame.shape[:2]), dtype=np.uint8)
+    result += (PixelColor.RED.value * ((frame[:, :, 0] - medians) > sensivity)).astype('uint8')
+    result += (PixelColor.BLUE.value * ((frame[:, :, -1] - medians) > sensivity)).astype('uint8')
+    return result
 
 
 def get_clouds(frame: NDArray) -> list[Cloud]:

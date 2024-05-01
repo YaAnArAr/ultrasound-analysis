@@ -5,6 +5,7 @@ This module contains classes and functions for video operations
 from pathlib import Path
 
 import cv2
+import numpy as np
 
 from numpy.typing import NDArray
 
@@ -39,3 +40,14 @@ def read_video(path: Path | str) -> NDArray:
         ret, frame = cap.read()
         if ret:
             yield crop_frame(frame).astype('uint8')
+
+
+def to_float_image(image: NDArray) -> NDArray:
+    """
+    Creates copy of image as [0, 1] float image
+    :param image: image to convert
+    :returns: converted image
+    """
+    if image.dtype != np.float32:
+        image = (image / 255).astype('float32')
+    return image
