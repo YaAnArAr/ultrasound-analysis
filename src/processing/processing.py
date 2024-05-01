@@ -10,7 +10,7 @@ import numpy as np
 
 from numpy.typing import NDArray
 
-from ..videotools import to_float_image 
+from ..videotools import to_float_image
 
 
 Pixel = tuple[int, int]
