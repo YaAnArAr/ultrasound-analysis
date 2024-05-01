@@ -9,17 +9,22 @@ import cv2
 from numpy.typing import NDArray
 
 
-def crop_frame(frame: NDArray) -> NDArray:
+CROP_OFFSET = ((150, 100), (20, 20))
+
+
+def crop_frame(frame: NDArray, crop_offset: tuple[tuple[int, int]] = CROP_OFFSET) -> NDArray:
     """
     Crop frame
     :param frame: frame that need to crop
+    :param crop_offset: cropping offset in the following format:
     :returns: cropped frame
     """
-    x_first_offset = 150
-    x_second_offset = 100
-    y_offset = 20
+    x_offset, y_offset = crop_offset
+    x_first_offset, x_second_offset = x_offset
+    y_first_offset, y_second_offset = y_offset
     x, y = frame.shape[0], frame.shape[1]
-    cropped_frame = frame[x_first_offset:x - x_second_offset, y_offset:y - y_offset]
+    cropped_frame = frame[x_first_offset:x - x_second_offset, 
+                          y_first_offset:y - y_second_offset]
     return cropped_frame
 
 
