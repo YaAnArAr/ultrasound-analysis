@@ -109,7 +109,7 @@ def dfs(x_y: tuple[int, int], dx_dy: tuple[NDArray, NDArray], counter: int,
         nx = x + dx[i]
         ny = y + dy[i]
         if frame[nx][ny] == 1 and modified_image[nx][ny] == 0:
-            dfs(nx, ny, dx, dy, counter, frame, modified_image, cloud)
+            dfs((nx, ny), (dx, dy), counter, (frame, modified_image), cloud)
     return cloud
 
 
