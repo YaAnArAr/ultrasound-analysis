@@ -81,12 +81,13 @@ def get_color(frame: NDArray, color: PixelColor) -> NDArray:
     :param color: color that detecting specific group of clouds
     :returns: HxW array containing pixels with color (gray-scaled image)
     """
-    gray_scaled_frame = (frame == color.value)
+    gray_scaled_frame = frame == color.value
     gray_scaled_frame = gray_scaled_frame.astype('int')
     return gray_scaled_frame
 
 
-def dfs(x: int, y: int, dx: NDArray, dy: NDArray, counter: int, frame: NDArray, modified_image: NDArray,
+def dfs(x: int, y: int, dx: NDArray, dy: NDArray, counter: int,
+        frame: NDArray, modified_image: NDArray,
         cloud: Cloud) -> Cloud:
     """
     Returns cloud of same color pixels
@@ -110,7 +111,7 @@ def dfs(x: int, y: int, dx: NDArray, dy: NDArray, counter: int, frame: NDArray, 
     return cloud
 
 
-def get_clouds(frame: NDArray) -> list[Cloud]:
+def get_clouds(frame: NDArray, color: PixelColor) -> list[Cloud]:
     """
     Returns list of point clouds of the frame
     :param frame: HxW image - a frame
