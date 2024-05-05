@@ -86,9 +86,8 @@ def get_color(frame: NDArray, color: PixelColor) -> NDArray:
     return gray_scaled_frame
 
 
-def dfs(x: int, y: int, dx: NDArray, dy: NDArray, counter: int,
-        frame: NDArray, modified_image: NDArray,
-        cloud: Cloud) -> Cloud:
+def dfs(x_y: tuple[int, int], dx_dy: tuple[NDArray, NDArray], counter: int,
+        images: tuple[NDArray, NDArray], cloud: Cloud) -> Cloud:
     """
     Returns cloud of same color pixels
     :param x: coordinate of start points
@@ -101,6 +100,9 @@ def dfs(x: int, y: int, dx: NDArray, dy: NDArray, counter: int,
     :param cloud: component of connected pixels
     :returns: cloud - component of connected pixels
     """
+    x, y = x_y[0], x_y[1]
+    dx, dy = dx_dy[0], dx_dy[1]
+    frame, modified_image = images[0], images[1]
     modified_image[x][y] = counter
     cloud.points.add(Pixel((x, y)))
     for i in range(0, 8):
@@ -122,13 +124,14 @@ def get_clouds(frame: NDArray, color: PixelColor) -> list[Cloud]:
     modified_image = np.pad(np.zeros(shape=frame.shape), 1, constant_values=0)
     dx = np.array([-1, -1, -1, 0, 0, 1, 1, 1])
     dy = np.array([-1, 1, 0, -1, 1, -1, 0, 1])
+
     counter = 1
-    clouds = list()
+    clouds = []
     for i in range(1, frame.shape[0] + 1):
         for j in range(1, frame.shape[1] + 1):
             if gray_scaled_image[i][j] == 1 and modified_image[i][j] == 0:
                 cloud = Cloud(color=color, points=set())
-                cloud = dfs(i, j, dx, dy, counter, gray_scaled_image, modified_image, cloud)
+                cloud = dfs((i, j), (dx, dy), counter, (gray_scaled_image, modified_image), cloud)
                 clouds.append(cloud)
                 counter += 1
     return clouds
