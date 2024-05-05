@@ -10,7 +10,7 @@ import numpy as np
 from numpy.typing import NDArray
 
 
-CROP_OFFSET = ((150, 100), (20, 20))
+CROP_OFFSET = ((160, 110), (40, 30))
 
 
 def crop_frame(frame: NDArray, crop_offset: tuple[tuple[int, int]] = CROP_OFFSET) -> NDArray:
