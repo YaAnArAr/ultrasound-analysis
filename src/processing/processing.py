@@ -5,13 +5,13 @@ This module contains classes and functions for frame processing
 from enum import Enum
 from dataclasses import dataclass, field
 from operator import itemgetter
+from queue import Queue
 
 import numpy as np
 
 from numpy.typing import NDArray
 
 from ..videotools import to_float_image
-
 
 Pixel = tuple[int, int]
 
@@ -74,11 +74,49 @@ def get_frame_colors(frame: NDArray, sensivity: float | int = SENSIVITY) -> NDAr
     return result
 
 
-def get_clouds(frame: NDArray) -> list[Cloud]:
+def get_color(frame: NDArray, color: PixelColor) -> NDArray:
+    """
+    Returns HxW matrix containing pixels with specific color, color
+    is determined by PixelColor enum
+    :param frame: HxW matrix containing color of each pixel
+    :param color: color that detecting specific group of clouds
+    :returns: HxW array containing pixels with color (gray-scaled image)
+    """
+    gray_scaled_frame = frame == color.value
+    gray_scaled_frame = gray_scaled_frame.astype('int')
+    return gray_scaled_frame
+
+
+def get_clouds(frame: NDArray, color: PixelColor) -> list[Cloud]:
     """
     Returns list of point clouds of the frame
-    :param frame: HxWx3 image - a frame
+    :param frame: HxW image - a frame
+    :param color: pixel's color for processing
     :returns: list of Cloud objects, where each one represents a cloud of specific color
     """
-    assert len(frame.shape) == 3 and frame.shape[-1] == 3, 'frame should be a 3 channel image'
-    raise NotImplementedError
+    gray_scaled_image = np.pad(get_color(frame, color), 1, constant_values=0)
+    modified_image = np.pad(np.zeros(shape=frame.shape), 1, constant_values=0)
+    dx = np.array([-1, -1, -1, 0, 0, 1, 1, 1])
+    dy = np.array([-1, 1, 0, -1, 1, -1, 0, 1])
+    counter = 1
+    clouds = []
+    for i in range(1, frame.shape[0] + 1):
+        for j in range(1, frame.shape[1] + 1):
+            if gray_scaled_image[i][j] == 1 and modified_image[i][j] == 0:
+                queue = Queue()
+                cloud = Cloud(color=color, points=set())
+                queue.put(Pixel((i, j)))
+                modified_image[i][j] = counter
+                cloud.points.add(Pixel((i - 1, j - 1)))
+                while not queue.empty():
+                    x, y = queue.get()
+                    for k in range(0, 8):
+                        nx = x + dx[k]
+                        ny = y + dy[k]
+                        if gray_scaled_image[nx][ny] == 1 and modified_image[nx][ny] == 0:
+                            queue.put(Pixel((nx, ny)))
+                            modified_image[nx][ny] = counter
+                            cloud.points.add(Pixel((nx - 1, ny - 1)))
+                clouds.append(cloud)
+                counter += 1
+    return clouds
