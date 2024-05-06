@@ -5,6 +5,7 @@ This module contains classes and functions for frame processing
 from enum import Enum
 from dataclasses import dataclass, field
 from operator import itemgetter
+from queue import Queue
 
 import numpy as np
 
