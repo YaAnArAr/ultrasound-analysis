@@ -53,6 +53,17 @@ class Cloud:
         """
         return len(self.points)
 
+    def bounding_box(self) -> tuple[tuple[int, int], tuple[int, int]]:
+        """
+        Returns bounding box of the cloud in format:
+        ((x_lower, x_upper), (y_lower, y_upper))
+        """
+        x_min = min(self.points, key=itemgetter(0))[0]
+        x_max = max(self.points, key=itemgetter(0))[0]
+        y_min = min(self.points, key=itemgetter(1))[1]
+        y_max = max(self.points, key=itemgetter(1))[1]
+        return (x_min, x_max), (y_min, y_max)
+
 
 def get_frame_colors(frame: NDArray, sensivity: float | int = SENSIVITY) -> NDArray:
     """
