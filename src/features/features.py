@@ -1,3 +1,7 @@
+"""
+File containing funcs and classes for feature extraction
+"""
+
 from dataclasses import dataclass
 
 import numpy as np
