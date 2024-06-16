@@ -47,12 +47,14 @@ class Cloud:
         assert 0 <= axis <= 1
         return min(self.points, key=itemgetter(axis))
 
+    @property
     def square(self) -> int:
         """
         Returns square of the cloud
         """
         return len(self.points)
 
+    @property
     def bounding_box(self) -> tuple[tuple[int, int], tuple[int, int]]:
         """
         Returns bounding box of the cloud in format:
