@@ -7,6 +7,9 @@ from ..processing import Cloud
 
 @dataclass
 class CloudFeature:
+    """
+    Class containing features of one specific cloud
+    """
     cloud: Cloud
     excentricity: float
     square: float
@@ -14,6 +17,9 @@ class CloudFeature:
 
 @dataclass
 class ImageFeature:
+    """
+    Class containing features of one specific image
+    """
     mean_square: float
     number_of_clouds: int
 
